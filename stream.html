@@ -9,14 +9,18 @@
     body {
       margin: 0;
       padding: 0;
-      height: 1080px;
-      width: 1920px;
-      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      max-height: 100vh;
+      max-width: 100vw;
     }
 
     video {
-      height: 1080px;
-      width: 1920px;
+      height: 100vh;
+      width: 100vw;
+      max-height: 100vh;
+      max-width: 100vw;
+      object-fit: cover;
       overflow: hidden;
     }
   </style>
@@ -24,7 +28,12 @@
 
 <body>
   <video src="https://cloud-5l69omhgz-hack-club-bot.vercel.app/0img_6864.mp4" loop autoplay></video>
-  <audio src="https://cloud-1smlu7t3d-hack-club-bot.vercel.app/0christmas_hip_hop_loop.mp3" loop autoplay></audio>
+  <audio id="music" src="https://cloud-1smlu7t3d-hack-club-bot.vercel.app/0christmas_hip_hop_loop.mp3" loop autoplay></audio>
+
+  <script>
+    const audio = document.getElementById("music");
+    audio.volume = 0.1;
+  </script>
 </body>
 
 </html>
