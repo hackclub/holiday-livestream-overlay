@@ -7,7 +7,7 @@
     /* Layout of the page */
     body {
       margin: 0;
-      background-color: #00ff00;
+      /* background-color: #00ff00; */
       height: 1080px;
       width: 1920px;
     }
@@ -35,12 +35,14 @@
 </head>
 
 <body>
-  <iframe src="./stream.html" class="livestream"></iframe>
+  <iframe class="livestream"></iframe>
   <div class="unregistered-hypercam-2">Unregistered HyperCam 2</div>
 
   <script>
     if (window.location.hash === '#live') {
-      document.querySelector('.livestream').src = './stream.html#live';
+      document.querySelector('.livestream').src = './stream.html#live'
+    } else {
+      document.querySelector('.livestream').src = './stream.html'
     }
   </script>
 </body>
