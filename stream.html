@@ -25,6 +25,13 @@
 <body>
   <video src="https://cloud-5l69omhgz-hack-club-bot.vercel.app/0img_6864.mp4" loop autoplay></video>
   <audio src="https://cloud-1smlu7t3d-hack-club-bot.vercel.app/0christmas_hip_hop_loop.mp3" loop autoplay></audio>
+
+  <script>
+    if (window.location.hash === '#live') {
+      const el = document.querySelector('video');
+      document.body.removeChild(el);
+    }
+  </script>
 </body>
 
 </html>
