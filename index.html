@@ -32,17 +32,81 @@
       padding: 3px;
     }
   </style>
+
+  <style>
+    /* recently used emoji */
+    .recent-emoji {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 3px;
+    }
+    .recent-emoji > * {
+      font-size: 1.5em;
+      padding: 3px;
+      background: rgba(255, 255, 255, 0.5);
+      animation: disappear 10s ease-out 25s forwards;
+    }
+
+    @keyframes disappear {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
   <iframe class="livestream"></iframe>
   <div class="unregistered-hypercam-2">Unregistered HyperCam 2</div>
+  <div class="recent-emoji"></div>
 
   <script>
     if (window.location.hash === '#live') {
       document.querySelector('.livestream').src = './stream.html#live'
     } else {
       document.querySelector('.livestream').src = './stream.html'
+    }
+  </script>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emoji-js/3.6.0/emoji.min.js"></script>
+  <script defer>
+    const jsConfetti = new JSConfetti()
+    const emojiConverter = new EmojiConvertor()
+    emojiConverter.allow_native = true
+
+    const triggerReaction = ({channel, reaction}) => {
+      const emoji = emojiConverter.replace_colons(':'+reaction+':')
+      if (emoji.includes(':')) {
+        // This is probably a custom slack emoji.... will want to find a way to render them
+        jsConfetti.addConfetti()
+      } else {
+        jsConfetti.addConfetti({
+          emojis: [emoji],
+          confettiNumber: 10 + Math.floor(Math.random() * 20),
+        })
+      }
+
+      const el = document.createElement('div')
+      el.innerText = `someone just reacted with ${emoji}`
+      const emojiListContainer = document.querySelector('.recent-emoji')
+      emojiListContainer.appendChild(el)
+      if (emojiListContainer.childElementCount > 6) {
+        emojiListContainer.removeChild(emojiListContainer.firstChild)
+      }
+    }
+
+    const socket = new WebSocket("wss://joebunyan.haas.hackclub.com/stream")
+    socket.onmessage = event => {
+      const data = JSON.parse(event.data)
+      if (data.type === 'reaction') {
+        triggerReaction(data)
+      }
     }
   </script>
 </body>
