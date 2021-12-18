@@ -1,156 +1,311 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <script>
-    // Reload the page if the github repo is updated since this page was loaded
-    const loadedAt = new Date()
-    let checkedAt = null
-    window.onload = () => {
-      document.querySelector('#loaded-at').innerHTML = `Loaded at ${loadedAt.toLocaleString()}`
-    }
-    const checkForUpdate = async () => {
-      checkedAt = new Date()
-      await fetch('https://api.github.com/repos/hackclub/holiday-livestream-overlay').then(res => res.json()).then(data => {
-        const updatedAt = Date.parse(data.updated_at)
-        if (updatedAt > loadedAt.getTime()) {
-          console.log('Time to update, reloading!')
-          window.location.reload()
-        } else {
-          document.querySelector('#loaded-at').innerHTML = `Loaded at ${loadedAt.toLocaleString()}<br>Checked at ${checkedAt.toLocaleString()}`
+  <head>
+    <script>
+      // Reload the page if the github repo is updated since this page was loaded
+      const loadedAt = new Date();
+      let checkedAt = null;
+      window.onload = () => {
+        document.querySelector(
+          "#loaded-at"
+        ).innerHTML = `Loaded at ${loadedAt.toLocaleString()}`;
+      };
+      const checkForUpdate = async () => {
+        checkedAt = new Date();
+        await fetch(
+          "https://api.github.com/repos/hackclub/holiday-livestream-overlay"
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            const updatedAt = Date.parse(data.updated_at);
+            if (updatedAt > loadedAt.getTime()) {
+              console.log("Time to update, reloading!");
+              window.location.reload();
+            } else {
+              document.querySelector(
+                "#loaded-at"
+              ).innerHTML = `Loaded at ${loadedAt.toLocaleString()}<br>Checked at ${checkedAt.toLocaleString()}`;
+            }
+          });
+      };
+      setInterval(checkForUpdate, 1000 * 60 * 5); // 5 minutes
+    </script>
+    <script>
+      let completedUpTo = 0;
+      window.onload = async () => {
+        const ornaments = document.querySelectorAll(".ornament");
+        for (let i = completedUpTo + 1; i <= ornaments.length; i++) {
+          const res = await fetch(`https://pass-story.netlify.app/pages/${i}/`);
+          console.log(res.ok, i);
+          if (res.ok) {
+            completedUpTo = i;
+          } else {
+            break;
+          }
         }
-      })
-    }
-    setInterval(checkForUpdate, 1000 * 60 * 5); // 5 minutes
-  </script>
-  <link rel="stylesheet" href="https://cloud-54v2d5vwe-hack-club-bot.vercel.app/0fsex300-webfont.css" />
-  <style>
-    /* Layout of the page */
-    body {
-      margin: 0;
-      /* background-color: #00ff00; */
-      height: 1080px;
-      width: 1920px;
-    }
-
-    iframe.livestream {
-      border: none;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-
-  <style>
-    /* Unregistered hypercam 2 */
-    .unregistered-hypercam-2 {
-      font-family: 'fixedsys';
-      font-size: 2em;
-      background: white;
-      color: black;
-      position: fixed;
-      top: 0;
-      left: 0;
-      padding: 3px;
-    }
-  </style>
-
-  <style>
-    /* Loaded at timestamp */
-    #loaded-at {
-      position: fixed;
-      top: 0;
-      right: 0;
-      font-family: 'fixedsys';
-      font-size: 0.5em;
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
-      padding: 3px;
-    }
-  </style>
-
-  <style>
-    /* recently used emoji */
-    .recent-emoji {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      padding: 3px;
-    }
-    .recent-emoji > * {
-      font-size: 1.5em;
-      padding: 3px;
-      background: rgba(255, 255, 255, 0.5);
-      animation: disappear 10s ease-out 55s forwards;
-    }
-
-    @keyframes disappear {
-      0% {
-        opacity: 1;
+        for (let i = 1; i <= completedUpTo; i++) {
+          ornaments[i - 1].classList.add("completed");
+        }
+        document.querySelector("#num-completed").innerText = completedUpTo;
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cloud-54v2d5vwe-hack-club-bot.vercel.app/0fsex300-webfont.css"
+    />
+    <style>
+      /* Layout of the page */
+      body {
+        margin: 0;
+        /* background-color: #00ff00; */
+        height: 1080px;
+        width: 1920px;
+        position: relative;
       }
-      100% {
-        opacity: 0;
+
+      iframe.livestream {
+        border: none;
+        width: 100%;
+        height: 100%;
       }
-    }
-  </style>
-</head>
+    </style>
 
-<body>
-  <iframe class="livestream"></iframe>
-  <div class="unregistered-hypercam-2">Unregistered HyperCam 2</div>
-  <div class="recent-emoji"></div>
-  <div id="loaded-at"></div>
+    <style>
+      /* Unregistered hypercam 2 */
+      .unregistered-hypercam-2 {
+        font-family: "fixedsys";
+        font-size: 2em;
+        background: white;
+        color: black;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 3px;
+      }
+    </style>
 
-  <script>
-    if (window.location.hash === '#live') {
-      document.querySelector('.livestream').src = './stream.html#live'
-    } else {
-      document.querySelector('.livestream').src = './stream.html'
-    }
-  </script>
+    <style>
+      /* Loaded at timestamp */
+      #loaded-at {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-family: "fixedsys";
+        font-size: 0.5em;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 3px;
+      }
+    </style>
 
-  <!-- Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/emoji-js/3.6.0/emoji.min.js"></script>
-  <script src="channel-whitelist.js"></script>
-  <script defer>
-    const jsConfetti = new JSConfetti()
-    const emojiConverter = new EmojiConvertor()
-    emojiConverter.allow_native = true
+    <style>
+      /* recently used emoji */
+      .recent-emoji {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 3px;
+      }
+      .recent-emoji > * {
+        font-size: 1.5em;
+        padding: 3px;
+        background: rgba(255, 255, 255, 0.5);
+        animation: disappear 10s ease-out 55s forwards;
+      }
 
-    const triggerReaction = ({channel, reaction}) => {
-      const emoji = emojiConverter.replace_colons(':'+reaction+':')
-      if (emoji.includes(':')) {
-        // This is probably a custom slack emoji.... will want to find a way to render them
-        jsConfetti.addConfetti()
+      @keyframes disappear {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+
+    <style>
+      /* christmas tree ornaments */
+      .tree {
+        position: absolute;
+        left: 60%;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        font-size: 1.5rem;
+      }
+
+      .ornaments {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        place-items: center;
+        list-style: none;
+        counter-reset: ornaments;
+      }
+
+      .ornament {
+        aspect-ratio: 1;
+        height: 50px;
+        background: white;
+        color: black;
+        border-radius: 50%;
+        counter-increment: ornaments;
+      }
+
+      .ornament::before {
+        content: counter(ornaments);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-weight: bold;
+      }
+
+      .ornament:nth-child(1) {
+        grid-column: 2;
+      }
+
+      .ornament:nth-child(4) {
+        grid-column: 1;
+      }
+
+      .ornament:nth-child(3n) {
+        transform: translateY(-100%) translateX(-50%);
+        background: #ec3750;
+        color: white;
+      }
+
+      .ornament:nth-child(2n) {
+        transform: translateY(150%) translateX(-80%);
+        background: #338eda;
+        color: white;
+      }
+
+      .ornament:not(.completed) {
+        background: #8492a6;
+        color: white;
+      }
+
+      .ornament.completed {
+        box-shadow: 0px 0px 10px 10px rgb(255, 239, 146);
+      }
+
+      #pass-story-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%) rotate(-5deg);
+        text-align: center;
+        background-color: white;
+      }
+
+      #pass-story-label > p {
+        margin: 10px;
+      }
+
+      #completion-status {
+        font-size: 1.825rem;
+        font-weight: bold;
+      }
+
+      #num-completed {
+        color: #ec3750;
+      }
+    </style>
+  </head>
+
+  <body>
+    <iframe class="livestream"></iframe>
+    <div class="unregistered-hypercam-2">Unregistered HyperCam 2</div>
+    <div class="recent-emoji"></div>
+    <div id="loaded-at"></div>
+
+    <div class="tree">
+      <div id="pass-story-label">
+        <p>https://pass-story.netlify.app</p>
+        <p>
+          <span id="completion-status"
+            ><span id="num-completed">-</span> / 16</span
+          >
+          pages completed
+        </p>
+      </div>
+      <ol class="ornaments">
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+        <li class="ornament"></li>
+      </ol>
+    </div>
+
+    <script>
+      if (window.location.hash === "#live") {
+        document.querySelector(".livestream").src = "./stream.html#live";
       } else {
-        jsConfetti.addConfetti({
-          emojis: [emoji],
-          confettiNumber: 10 + Math.floor(Math.random() * 20),
-        })
+        document.querySelector(".livestream").src = "./stream.html";
       }
+    </script>
 
-      const el = document.createElement('div')
-      let message = `someone just reacted with ${emoji}`
-      console.log(channel, channelWhitelist(channel))
-      if (channelWhitelist(channel)) {
-        message = `in #${channelWhitelist(channel)} ${message}`
-      }
-      el.innerText = message
-      const emojiListContainer = document.querySelector('.recent-emoji')
-      emojiListContainer.appendChild(el)
-      if (emojiListContainer.childElementCount > 6) {
-        emojiListContainer.removeChild(emojiListContainer.firstChild)
-      }
-    }
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emoji-js/3.6.0/emoji.min.js"></script>
+    <script src="channel-whitelist.js"></script>
+    <script defer>
+      const jsConfetti = new JSConfetti();
+      const emojiConverter = new EmojiConvertor();
+      emojiConverter.allow_native = true;
 
-    const socket = new WebSocket("wss://joebunyan.haas.hackclub.com/stream")
-    socket.onmessage = event => {
-      const data = JSON.parse(event.data)
-      if (data.type === 'reaction') {
-        triggerReaction(data)
-      }
-    }
-  </script>
-</body>
+      const triggerReaction = ({ channel, reaction }) => {
+        const emoji = emojiConverter.replace_colons(":" + reaction + ":");
+        if (emoji.includes(":")) {
+          // This is probably a custom slack emoji.... will want to find a way to render them
+          jsConfetti.addConfetti();
+        } else {
+          jsConfetti.addConfetti({
+            emojis: [emoji],
+            confettiNumber: 10 + Math.floor(Math.random() * 20),
+          });
+        }
 
+        const el = document.createElement("div");
+        let message = `someone just reacted with ${emoji}`;
+        console.log(channel, channelWhitelist(channel));
+        if (channelWhitelist(channel)) {
+          message = `in #${channelWhitelist(channel)} ${message}`;
+        }
+        el.innerText = message;
+        const emojiListContainer = document.querySelector(".recent-emoji");
+        emojiListContainer.appendChild(el);
+        if (emojiListContainer.childElementCount > 6) {
+          emojiListContainer.removeChild(emojiListContainer.firstChild);
+        }
+      };
+
+      const socket = new WebSocket("wss://joebunyan.haas.hackclub.com/stream");
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === "reaction") {
+          triggerReaction(data);
+        }
+      };
+    </script>
+  </body>
 </html>
