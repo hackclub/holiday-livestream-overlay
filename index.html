@@ -11,7 +11,8 @@
     const checkForUpdate = async () => {
       await fetch('https://api.github.com/repos/hackclub/holiday-livestream-overlay').then(res => res.json()).then(data => {
         const updatedAt = Date.parse(data.updated_at)
-        if (updatedAt > loadedAt.getTime() && updatedAt > (new Date().getTime() + 1000 * 60)) {
+        if (updatedAt > loadedAt.getTime()) {
+          console.log('Time to update, reloading!')
           window.location.reload()
         }
       })
