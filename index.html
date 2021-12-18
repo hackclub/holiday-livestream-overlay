@@ -106,6 +106,7 @@
   <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/emoji-js/3.6.0/emoji.min.js"></script>
+  <script src="channel-whitelist.js"></script>
   <script defer>
     const jsConfetti = new JSConfetti()
     const emojiConverter = new EmojiConvertor()
@@ -124,7 +125,12 @@
       }
 
       const el = document.createElement('div')
-      el.innerText = `someone just reacted with ${emoji}`
+      let message = `someone just reacted with ${emoji}`
+      console.log(channel, channelWhitelist(channel))
+      if (channelWhitelist(channel)) {
+        message = `in #${channelWhitelist(channel)} ${message}`
+      }
+      el.innerText = message
       const emojiListContainer = document.querySelector('.recent-emoji')
       emojiListContainer.appendChild(el)
       if (emojiListContainer.childElementCount > 6) {
