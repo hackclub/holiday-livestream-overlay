@@ -5,11 +5,12 @@
       // Reload the page if the github repo is updated since this page was loaded
       const loadedAt = new Date();
       let checkedAt = null;
-      window.onload = () => {
+      window.addEventListener("load", () => {
+        console.log("here");
         document.querySelector(
           "#loaded-at"
         ).innerHTML = `Loaded at ${loadedAt.toLocaleString()}`;
-      };
+      });
       const checkForUpdate = async () => {
         checkedAt = new Date();
         await fetch(
@@ -32,11 +33,10 @@
     </script>
     <script>
       let completedUpTo = 0;
-      window.onload = async () => {
+      window.addEventListener("load", async () => {
         const ornaments = document.querySelectorAll(".ornament");
         for (let i = completedUpTo + 1; i <= ornaments.length; i++) {
           const res = await fetch(`https://pass-story.netlify.app/pages/${i}/`);
-          console.log(res.ok, i);
           if (res.ok) {
             completedUpTo = i;
           } else {
@@ -47,7 +47,7 @@
           ornaments[i - 1].classList.add("completed");
         }
         document.querySelector("#num-completed").innerText = completedUpTo;
-      };
+      });
     </script>
     <link
       rel="stylesheet"
@@ -85,7 +85,7 @@
         font-size: 2em;
         background: white;
         color: black;
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         padding: 3px;
