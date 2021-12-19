@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="load-emoji.js"></script>
+    <style>
+      img.inline-emoji {
+        height: 1.5em;
+        display: inline-block;
+      }
+    </style>
     <script>
       // Reload the page if the github repo is updated since this page was loaded
       const loadedAt = new Date();
@@ -284,23 +291,32 @@
 
       const triggerReaction = ({ channel, reaction }) => {
         const emoji = emojiConverter.replace_colons(":" + reaction + ":");
+        let emojiUrl, message
         if (emoji.includes(":")) {
-          // This is probably a custom slack emoji.... will want to find a way to render them
+          // This is probably a custom slack emoji.... will want to find a way to render them eventually
           jsConfetti.addConfetti();
+
+          emojiUrl = lookupEmoji(emoji.replace(/:/g, ''))
+          if (emojiUrl) {
+            message = `someone just reacted with <img src=${emojiUrl} class="inline-emoji">`;
+          } else {
+            message = `someone just reacted with ${emoji}`;
+          }
         } else {
           jsConfetti.addConfetti({
             emojis: [emoji],
             confettiNumber: 10 + Math.floor(Math.random() * 20),
           });
+          message = `someone just reacted with ${emoji}`;
         }
 
         const el = document.createElement("div");
-        let message = `someone just reacted with ${emoji}`;
+
         console.log(channel, channelWhitelist(channel));
         if (channelWhitelist(channel)) {
           message = `in #${channelWhitelist(channel)} ${message}`;
         }
-        el.innerText = message;
+        el.innerHTML = message;
         const emojiListContainer = document.querySelector(".recent-emoji");
         emojiListContainer.appendChild(el);
         if (emojiListContainer.childElementCount > 6) {
