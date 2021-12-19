@@ -1,5 +1,5 @@
 const channelWhitelist = id => ({
-  'C0159TSJVH8': 'what-is-my-channel-id',
+  'C0159TSJVH8': 'what-is-my-slack-id',
   'C0266FRGV': 'lounge',
   'C0P5NE354': 'bot-spam',
   'C01EZ2MNPTQ': 'katabatic-wind',
@@ -12,5 +12,8 @@ const channelWhitelist = id => ({
   'CDJV1CXC2': 'dogs',
   'C1C3K2RQV': 'design',
   'C01D7AHKMPF': 'community',
-  'C0178M084FL': 'crypto'
+  'C0178M084FL': 'crypto',
+  'C01TW2CAK55': 'whack-a-mole',
+  'C020LT3UCBW': 'bot-spam-for-deer',
+  'C02HSS9Q3D5': 'boston-for-deer'
 }[id])
