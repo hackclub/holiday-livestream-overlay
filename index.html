@@ -290,7 +290,7 @@
     </script>
 
     <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+    <script src="https://cloud-7xkwteatx-hack-club-bot.vercel.app/0js-confetti.browser.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emoji-js/3.6.0/emoji.min.js"></script>
     <script src="channel-whitelist.js"></script>
     <script defer>
@@ -302,15 +302,21 @@
         const emoji = emojiConverter.replace_colons(":" + reaction + ":");
         let emojiUrl, message;
         if (emoji.includes(":")) {
-          // This is probably a custom slack emoji.... will want to find a way to render them eventually
-          jsConfetti.addConfetti();
 
-          emojiUrl = lookupEmoji(emoji.replace(/:/g, ""));
+          emojiUrl = lookupEmoji(emoji.replace(/:/g, ''))
           if (emojiUrl) {
             message = `someone just reacted with <img src=${emojiUrl} class="inline-emoji">`;
           } else {
             message = `someone just reacted with ${emoji}`;
           }
+          const img = new Image();
+          img.src = emojiUrl;
+          img.addEventListener('load', () => {
+            jsConfetti.addConfetti({
+              images: [{ src: img }],
+              confettiNumber: 10 + Math.floor(Math.random() * 20),
+            });
+          });
         } else {
           jsConfetti.addConfetti({
             emojis: [emoji],

@@ -7,6 +7,9 @@ fetch('https://badger.hackclub.dev/api/emoji').then(res => res.json()).then(data
 })
 
 // Given an emoji name, return the image src, or null if it's not a custom emoji on the Slack
-const lookupEmoji = name => (
-  emojiObj[name]
-)
+const lookupEmoji = name => {
+  const src = emojiObj[name]
+  if (!src) return;
+  if (src.substring(0,6)==='alias:') return lookupEmoji(src.replace('alias:', ''));
+  return src;
+}
