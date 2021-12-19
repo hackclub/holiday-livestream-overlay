@@ -40,7 +40,7 @@
     </script>
     <script>
       let completedUpTo = 0;
-      window.addEventListener("load", async () => {
+      const updateTree = async () => {
         const ornaments = document.querySelectorAll(".ornament");
         for (let i = completedUpTo + 1; i <= ornaments.length; i++) {
           const res = await fetch(`https://pass-story.netlify.app/pages/${i}/`);
@@ -54,7 +54,9 @@
           ornaments[i - 1].classList.add("completed");
         }
         document.querySelector("#num-completed").innerText = completedUpTo;
-      });
+      };
+      window.addEventListener("load", updateTree);
+      setInterval(updateTree, 1000 * 60 * 20); // 20 minutes
     </script>
     <link
       rel="stylesheet"
@@ -302,8 +304,7 @@
         const emoji = emojiConverter.replace_colons(":" + reaction + ":");
         let emojiUrl, message;
         if (emoji.includes(":")) {
-
-          emojiUrl = lookupEmoji(emoji.replace(/:/g, ''))
+          emojiUrl = lookupEmoji(emoji.replace(/:/g, ""));
           if (emojiUrl) {
             message = `someone just reacted with <img src=${emojiUrl} class="inline-emoji">`;
           } else {
@@ -311,7 +312,7 @@
           }
           const img = new Image();
           img.src = emojiUrl;
-          img.addEventListener('load', () => {
+          img.addEventListener("load", () => {
             jsConfetti.addConfetti({
               images: [{ src: img }],
               confettiNumber: 10 + Math.floor(Math.random() * 20),
