@@ -252,7 +252,7 @@
 
     <div class="tree">
       <div id="pass-story-label">
-        <p>https://pass-story.netlify.app</p>
+        <p>https://hack.af/pass-story</p>
         <p>
           <span id="completion-status"
             ><span id="num-completed">-</span> / 16</span
@@ -299,12 +299,12 @@
 
       const triggerReaction = ({ channel, reaction }) => {
         const emoji = emojiConverter.replace_colons(":" + reaction + ":");
-        let emojiUrl, message
+        let emojiUrl, message;
         if (emoji.includes(":")) {
           // This is probably a custom slack emoji.... will want to find a way to render them eventually
           jsConfetti.addConfetti();
 
-          emojiUrl = lookupEmoji(emoji.replace(/:/g, ''))
+          emojiUrl = lookupEmoji(emoji.replace(/:/g, ""));
           if (emojiUrl) {
             message = `someone just reacted with <img src=${emojiUrl} class="inline-emoji">`;
           } else {
