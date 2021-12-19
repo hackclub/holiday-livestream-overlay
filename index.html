@@ -71,7 +71,7 @@
 
     <style>
       #flag-logo {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         height: 15%;
@@ -84,7 +84,7 @@
         font-size: 2em;
         background: white;
         color: black;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         padding: 3px;
@@ -94,7 +94,7 @@
     <style>
       /* Loaded at timestamp */
       #loaded-at {
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         font-family: "fixedsys";
@@ -108,7 +108,7 @@
     <style>
       /* recently used emoji */
       .recent-emoji {
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 0;
         padding: 3px;
@@ -133,7 +133,7 @@
     <style>
       /* christmas tree ornaments */
       .tree {
-        position: absolute;
+        position: fixed;
         left: 60%;
         right: 0;
         top: 0;
@@ -182,14 +182,18 @@
         grid-column: 1;
       }
 
+      .ornament:nth-child(6) {
+        grid-column: 5;
+      }
+
       .ornament:nth-child(3n) {
-        transform: translateY(-100%) translateX(-50%);
+        transform: translateY(-10%) translateX(-50%);
         background: #ec3750;
         color: white;
       }
 
       .ornament:nth-child(2n) {
-        transform: translateY(150%) translateX(-80%);
+        transform: translateY(100%) translateX(-80%);
         background: #338eda;
         color: white;
       }
@@ -210,6 +214,7 @@
         transform: translateY(-50%) translateX(-50%) rotate(-5deg);
         text-align: center;
         background-color: white;
+        font-size: 1.125rem;
       }
 
       #pass-story-label > p {
@@ -217,7 +222,7 @@
       }
 
       #completion-status {
-        font-size: 1.825rem;
+        font-size: 1.5rem;
         font-weight: bold;
       }
 
@@ -232,7 +237,10 @@
     <div class="unregistered-hypercam-2">Unregistered HyperCam 2</div>
     <div class="recent-emoji"></div>
     <div id="loaded-at"></div>
-    <img id="flag-logo" src="https://assets.hackclub.com/flag-orpheus-left.svg" />
+    <img
+      id="flag-logo"
+      src="https://assets.hackclub.com/flag-orpheus-left.svg"
+    />
 
     <div class="tree">
       <div id="pass-story-label">
