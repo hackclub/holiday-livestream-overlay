@@ -301,9 +301,6 @@
         const emoji = emojiConverter.replace_colons(":" + reaction + ":");
         let emojiUrl, message
         if (emoji.includes(":")) {
-          // This is probably a custom slack emoji.... will want to find a way to render them eventually
-          jsConfetti.addConfetti();
-
           emojiUrl = lookupEmoji(emoji.replace(/:/g, ''))
           if (emojiUrl) {
             message = `someone just reacted with <img src=${emojiUrl} class="inline-emoji">`;
@@ -318,7 +315,6 @@
               confettiNumber: 10 + Math.floor(Math.random() * 20),
             });
           });
-
         } else {
           jsConfetti.addConfetti({
             emojis: [emoji],
