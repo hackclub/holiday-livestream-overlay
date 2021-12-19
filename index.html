@@ -120,6 +120,7 @@
         bottom: 0;
         left: 0;
         padding: 3px;
+        width: 100vw;
       }
       .recent-emoji > * {
         font-size: 1.5em;
@@ -243,7 +244,7 @@
   <body>
     <iframe class="livestream"></iframe>
     <div class="unregistered-hypercam-2">Unregistered HyperCam 2</div>
-    <div class="recent-emoji"></div>
+    <marquee class="recent-emoji"></marquee>
     <div id="loaded-at"></div>
     <img
       id="flag-logo"
@@ -252,7 +253,7 @@
 
     <div class="tree">
       <div id="pass-story-label">
-        <p>https://pass-story.netlify.app</p>
+        <p>https://hack.af/pass-story</p>
         <p>
           <span id="completion-status"
             ><span id="num-completed">-</span> / 16</span
@@ -299,8 +300,9 @@
 
       const triggerReaction = ({ channel, reaction }) => {
         const emoji = emojiConverter.replace_colons(":" + reaction + ":");
-        let emojiUrl, message
+        let emojiUrl, message;
         if (emoji.includes(":")) {
+
           emojiUrl = lookupEmoji(emoji.replace(/:/g, ''))
           if (emojiUrl) {
             message = `someone just reacted with <img src=${emojiUrl} class="inline-emoji">`;
