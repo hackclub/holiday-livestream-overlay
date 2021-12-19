@@ -15,5 +15,11 @@ const channelWhitelist = id => ({
   'C0178M084FL': 'crypto',
   'C01TW2CAK55': 'whack-a-mole',
   'C020LT3UCBW': 'bot-spam-for-deer',
-  'C02HSS9Q3D5': 'boston-for-deer'
+  'C02HSS9Q3D5': 'boston-for-deer',
+  'C02QRBPCRJP': 'codejelly',
+  'C0158NY6QEN': 'the-insanity-of-eleeza',
+  'C01N3B30TFB': 'hack-as-a-service-dev',
+  'CDJMS683D': 'counttoamillion',
+  'C75M7C0SY': 'welcome',
+  'C02RDMD9Z17': 'emojineology'
 }[id])
