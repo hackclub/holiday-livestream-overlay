@@ -2,7 +2,7 @@ const channelWhitelist = id => ({
   'C0159TSJVH8': 'what-is-my-slack-id',
   'C0266FRGV': 'lounge',
   'C0P5NE354': 'bot-spam',
-  'C01EZ2MNPTQ': 'katabatic-wind',
+  'C01EZ2MNPTQ': 'lofi-ramblings-to-scroll-slash-study-to',
   'C0EA9S0A0': 'code',
   'C0M8PUPU6': 'ship',
   'C01504DCLVD': 'scrapbook',
@@ -21,5 +21,10 @@ const channelWhitelist = id => ({
   'C01N3B30TFB': 'hack-as-a-service-dev',
   'CDJMS683D': 'counttoamillion',
   'C75M7C0SY': 'welcome',
-  'C02RDMD9Z17': 'emojineology'
+  'C02RDMD9Z17': 'emojineology',
+  'C025WH8TECA': 'letter-game',
+  'C02AT9HNVDW': 'emoji',
+  'C016DEDUL87': 'cdn',
+  'C01U8UCHZC1': 'poll-of-the-day',
+  'CB19EP4MC': 'memes'
 }[id])
