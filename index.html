@@ -283,6 +283,13 @@
       </ol>
     </div>
 
+    <canvas
+      id="canvas"
+      width="1920"
+      height="1080"
+      style="position: absolute; left: 0; top: 0"
+    ></canvas>
+
     <script>
       if (window.location.hash === "#live") {
         document.querySelector(".livestream").src = "./stream.html#live";
@@ -290,6 +297,13 @@
         document.querySelector(".livestream").src = "./stream.html";
       }
     </script>
+    <!-- Draw (https://draw.hack.af) -->
+    <script
+      src="https://cdn.socket.io/4.4.0/socket.io.min.js"
+      integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj"
+      crossorigin="anonymous"
+    ></script>
+    <script src="draw.js"></script>
 
     <!-- Confetti -->
     <script src="https://cloud-7xkwteatx-hack-club-bot.vercel.app/0js-confetti.browser.js"></script>
