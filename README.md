@@ -25,4 +25,4 @@ $ cd holiday-stream-overlay
 # From here, try serving the site
 ```
 
-See what the current overlay looks like with a test livestream (looping gif) by going to https://hackclub.github.io/hacky-holidays/.
+See what the current overlay looks like with a test livestream (looping gif) by going to https://hackclub.github.io/holiday-livestream-overlay/
