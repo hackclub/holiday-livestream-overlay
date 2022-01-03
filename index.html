@@ -124,9 +124,10 @@
         padding: 3px;
         width: 100vw;
       }
-      .recent-emoji > * {
+      .recent-emoji > marquee > span {
         font-size: 1.5em;
         padding: 3px;
+        border-radius: 5px;
         background: rgba(255, 255, 255, 0.5);
         animation: disappear 10s ease-out 55s forwards;
       }
@@ -246,7 +247,7 @@
   <body>
     <iframe class="livestream"></iframe>
     <div class="unregistered-hypercam-2">Unregistered HyperCam 2</div>
-    <marquee class="recent-emoji"></marquee>
+    <div class="recent-emoji"></div>
     <div id="loaded-at"></div>
     <img
       id="flag-logo"
@@ -340,16 +341,18 @@
           message = `someone just reacted with ${emoji}`;
         }
 
-        const el = document.createElement("div");
+        const marquee = document.createElement("marquee");
+        const marqueeText = document.createElement("span");
 
         console.log(channel, channelWhitelist(channel));
         if (channelWhitelist(channel)) {
           message = `in #${channelWhitelist(channel)} ${message}`;
         }
-        el.innerHTML = message;
+        marqueeText.innerHTML = message;
         const emojiListContainer = document.querySelector(".recent-emoji");
-        emojiListContainer.appendChild(el);
-        if (emojiListContainer.childElementCount > 6) {
+        marquee.appendChild(marqueeText);
+        emojiListContainer.appendChild(marquee);
+        if (emojiListContainer.childElementCount > 8) {
           emojiListContainer.removeChild(emojiListContainer.firstChild);
         }
       };
